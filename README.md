@@ -16,12 +16,12 @@ The interface will also account for 10th frame includes a third ball.
 * Spare - Score of 10, plus the total number of pins knocked down on the next roll only
 * Each frame displays the cumulative score up to that point for all complete frames. If a frame has a strike or spare, the score for that frame is not displayed until sufficient subsequent rolls have been input
 
-#TODO
+## TODO
 * Only loads frame by frame, needs work on displaying previous frames
 * score calculation is able to handle a variety of games but still needs some optimization
 * UI is pretty basic and could be enhanced 
 
-#Completed
+## Completed
 * above 80% code coverage
 * Handles variety of games
 * Handles 10th frame (extra roll)
