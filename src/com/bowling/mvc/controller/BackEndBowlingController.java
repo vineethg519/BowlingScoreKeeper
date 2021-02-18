@@ -100,16 +100,38 @@ public class BackEndBowlingController extends HttpServlet {
 					}
 					if (frame.isDone()) {
 						totalScore += currScore;
-						if (singlePlayerGame.frameCounter == 9 && frame.isStrike || frame.isSpare()) {
+						// 10th frame condition
+						if (singlePlayerGame.frameCounter == 9) {
+							if (frame.isStrike || frame.isSpare()) {
+								rolls = 1;
+							} else {
+								frameNbr++;
+							}
+						}
+						// 11th extra frame when its strike
+						else if (singlePlayerGame.frameCounter == 10 && frame.isStrike) {
+							rolls = 1;
+							singlePlayerGame.frames.get(9).scores[1] = 10;
+							totalScore += 10;
+							singlePlayerGame.frameCounter--;
+						}
 
-						} else {
+						else {
 							frameNbr++;
 						}
 					}
+					// set input roll
 					if (frame.noOfPins == 0) {
 						if (frame.isStrike) {
 							ballRoll = "X";
-							request.setAttribute("totalScore", "");
+							if (singlePlayerGame.frameCounter == 10 && frame.isDone() && !frame.isStrike) {
+								request.setAttribute("totalScore", totalScore);
+							} else if (singlePlayerGame.frameCounter == 10 && frame.isStrike && frame.noAttempts == 3) {
+								request.setAttribute("totalScore", totalScore);
+								frameNbr++;
+							} else {
+								request.setAttribute("totalScore", "");
+							}
 						} else if (frame.isSpare()) {
 							ballRoll = "/";
 							request.setAttribute("totalScore", "");
